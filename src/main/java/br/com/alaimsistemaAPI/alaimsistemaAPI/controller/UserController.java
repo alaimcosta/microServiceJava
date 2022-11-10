@@ -1,9 +1,7 @@
 package br.com.alaimsistemaAPI.alaimsistemaAPI.controller;
 
 import br.com.alaimsistemaAPI.alaimsistemaAPI.dto.UserDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -55,10 +53,21 @@ public class UserController {
     @GetMapping("/users/{cpf}")
     public UserDTO getUsersFiltro(@PathVariable String cpf){
         for(UserDTO userFilter: usuarios){
-            if()
+            if(userFilter.getCpf().equals(cpf)){ // método equals realiza comparações
+                return userFilter;
+            }
         }
         return null;
     }
+
+    @PostMapping("/newUser")
+    UserDTO inserir(@RequestBody UserDTO userDTO){ //RequestBody -> para receber dados no corpo da requisição
+        userDTO.setDataCadastro(new Date());
+        usuarios.add(userDTO);
+        return userDTO;
+    }
+
+
 
 
 }
