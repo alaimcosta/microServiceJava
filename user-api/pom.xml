@@ -12,6 +12,7 @@
 	<artifactId>alaim-sistemaAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>alaim-sistemaAPI</name>
+
 	<description>Sistema de uma API de compra</description>
 	<properties>
 		<java.version>11</java.version>

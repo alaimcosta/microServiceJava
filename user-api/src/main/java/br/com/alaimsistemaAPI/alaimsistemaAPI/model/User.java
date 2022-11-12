@@ -1,10 +1,19 @@
-package br.com.alaimsistemaAPI.alaimsistemaAPI.dto;
+package br.com.alaimsistemaAPI.alaimsistemaAPI.model;
 
-import br.com.alaimsistemaAPI.alaimsistemaAPI.model.User;
+import br.com.alaimsistemaAPI.alaimsistemaAPI.dto.UserDTO;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
-public class UserDTO {
+@Entity
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String nome;
     private String cpf;
     private String endereco;
@@ -12,7 +21,12 @@ public class UserDTO {
     private String telefone;
     private Date dataCadastro;
 
-    public UserDTO(){
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -63,16 +77,14 @@ public class UserDTO {
         this.dataCadastro = dataCadastro;
     }
 
-    //convertendo instâncias da entidade UserDTO para User
-    public static UserDTO convert(User user){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setNome(user.getNome());
-        userDTO.setEndereco(user.getEndereco());
-        userDTO.setCpf(user.getCpf());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setTelefone(user.getTelefone());
-        userDTO.setDataCadastro(user.getDataCadastro());
-        return userDTO;
+    public static User convert(UserDTO userDTO){
+        User user = new User();
+        user.setNome(userDTO.getNome());
+        user.setEndereco(userDTO.getEndereco());
+        user.setCpf(userDTO.getCpf());
+        user.setEmail(userDTO.getEmail());
+        user.setTelefone(userDTO.getTelefone());
+        user.setDataCadastro(userDTO.getDataCadastro());
+        return user;
     }
-
 }

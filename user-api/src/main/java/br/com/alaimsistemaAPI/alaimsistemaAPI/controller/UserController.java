@@ -1,28 +1,52 @@
 package br.com.alaimsistemaAPI.alaimsistemaAPI.controller;
 
 import br.com.alaimsistemaAPI.alaimsistemaAPI.dto.UserDTO;
+import br.com.alaimsistemaAPI.alaimsistemaAPI.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
 public class UserController {
 
-    @GetMapping("/")
-    public String getMensagem(){
-        return "Trabalhando com Spring boot ";
-    }
+    @Autowired
+    private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/user/")
     public List<UserDTO> getUsers(){
+        List<UserDTO> usuarios = userService.getAll();
         return usuarios;
     }
-    public static List<UserDTO> usuarios = new ArrayList<UserDTO>();
 
-    @PostConstruct
+    @GetMapping("/user/{id}")
+    UserDTO findById(@PathVariable Long id) {
+        return userService.findById(id);
+    }
+
+    @PostMapping("/user")
+    UserDTO newUser(@RequestBody UserDTO userDTO) { //RequestBody -> para receber dados no corpo da requisição
+        return userService.save(userDTO);
+    }
+
+    @GetMapping("/user/cpf/{cpf}")
+    UserDTO findByCpf(@PathVariable String cpf) {
+        return userService.findByCpf(cpf);
+    }
+
+    @DeleteMapping("/user/{id}")
+    UserDTO delete(@PathVariable Long id){
+        return userService.delete(id);
+    }
+
+    @GetMapping("/user/search")
+    public List<UserDTO> queryByName(
+            @RequestParam(name="nome", required = true) //RequestParam --> quando queremos passar parametros na URL para rota
+            String nome) {
+        return userService.queryByName(nome);
+    }
+
+/*    @PostConstruct
     public void initiateList(){
         UserDTO userDTO = new UserDTO();
         userDTO.setNome("João");
@@ -48,36 +72,7 @@ public class UserController {
         usuarios.add(userDTO);
         usuarios.add(userDTO2);
         usuarios.add(userDTO3);
-    }
-
-    @GetMapping("/users/{cpf}")
-    public UserDTO getUsersFiltro(@PathVariable String cpf){
-        for(UserDTO userFilter: usuarios){
-            if(userFilter.getCpf().equals(cpf)){ // método equals realiza comparações
-                return userFilter;
-            }
-        }
-        return null;
-    }
-
-    @PostMapping("/newUser")
-    UserDTO inserir(@RequestBody UserDTO userDTO){ //RequestBody -> para receber dados no corpo da requisição
-        userDTO.setDataCadastro(new Date());
-        usuarios.add(userDTO);
-        return userDTO;
-    }
-
-    @DeleteMapping("/user/{cpf}")
-    public boolean remover(@PathVariable String cpf) {
-        for (UserDTO userFilter: usuarios){
-            if(userFilter.getCpf().equals(cpf)){
-                usuarios.remove(userFilter);
-                return true;
-            }
-        }
-        return false;
-    }
-
+    }*/
 
 
 }
