@@ -1,14 +1,16 @@
-package br.com.alaimsistemaAPI.alaimsistemaAPI;
+package br.com.alaim.shoppingapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
 @SpringBootApplication
-public class AlaimSistemaApiApplication {
+@Component
+public class ShoppingApiApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(AlaimSistemaApiApplication.class, args);
+		SpringApplication.run(ShoppingApiApplication.class, args);
 	}
 
 }
